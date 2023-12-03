@@ -1,0 +1,11 @@
+{
+  "name": "1404027_danton_rodrigues",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Danton Lucas",
+  "license": "ISC"
+}
