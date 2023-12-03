@@ -9,6 +9,7 @@
     <link href="bootstrap-5.0.2/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="jquery-3.7.1.min.js"></script>
+    <script src="app.js"></script>
 </head>
 
 <body>
@@ -139,8 +140,62 @@
 
 
 </footer>
-<script src="app.js"></script>
+
 <script src="bootstrap-5.0.2/js/bootstrap.min.js"></script>
 <script src="bootstrap-5.0.2/js/bootstrap.bundle.min.js"></script>
+<script>
+    
+//carrossel
+$(document).ready(function () {
+    let ulFotosDestaque = $('#CarrousselDeFotos');
+    let strImagemDestaque = "";
+    for (let i = 0; i < Destaques.length; i++) {
+        let Destaque = Destaques[i];
 
+        strImagemDestaque += ` <div>   
+        <a href="">
+        <img src="${Destaque.image}" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+            <h5>${Destaque.titulo}</h5>
+            <p>${Destaque.localizacao} </p>
+
+            </p>
+        </div>
+    </a>
+    </div> `
+            ;
+
+    }
+    ulFotosDestaque.html(strImagemDestaque);
+});
+
+
+
+$(document).ready(function () {
+    let ulgaleriaDeFotos = $('#galeriaDeFotos');
+    let strTextoHTML = "";
+    for (let i = 0; i < Cachoeiras.length; i++) {
+        let Cachoeira = Cachoeiras[i];
+
+        strTextoHTML += ` <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <a href="detalhe_album.html?id=${Cachoeira.id}">
+                <img src="${Cachoeira.capa}" class="card-img-top" alt="Imagem 1"
+                    style="max-height: 200px;">
+                    </a>
+            <div class="card-body">
+                <h2 class="card-title"><li>${Cachoeira.titulo}</li></h2>
+                <h5<li>${Cachoeira.localizacao}</li></h2>
+                <p class="card-text">${Cachoeira.descritivo}</p>
+            </div>
+        </div> 
+    </div>`;
+
+    }
+    ulgaleriaDeFotos.html(strTextoHTML);
+});
+
+
+
+</script>
 </html>

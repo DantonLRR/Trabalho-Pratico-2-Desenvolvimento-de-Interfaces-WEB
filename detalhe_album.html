@@ -1,17 +1,42 @@
-<!-- a requisição faz sempre trocar o final detalhe_album.html?id=1.... -->
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes da Cachoeira</title>
+    <script src="jquery-3.7.1.min.js"></script>
+    <script src="app.js"></script>
 </head>
+
 <body>
     <div id="tela">
 
     </div>
+
     <script>
-        
+        $(document).ready(function () {
+            carregarDados().then(() => {
+                let params = new URLSearchParams(location.search)
+                let id = params.get('id');
+                console.log("id passado no click " + id);
+                console.log("Cachoeiras disponíveis: ", Cachoeiras);
+                CachoeiraSelecionada = Cachoeiras.find(function (elem) {
+                    return elem.id == id
+                });
+                if (CachoeiraSelecionada) {
+                    let tela = $('#tela');
+                    tela.html(`<p>
+                        id: ${CachoeiraSelecionada.id} <br>
+                        capa: ${CachoeiraSelecionada.capa} <br>
+                        titulo: ${CachoeiraSelecionada.titulo} <br>
+                        localizacao: ${CachoeiraSelecionada.localizacao} <br>
+                        descritivo: ${CachoeiraSelecionada.descritivo} <br>
+                    </p>`);
+                }
+            })
+        });
     </script>
 </body>
+
 </html>
