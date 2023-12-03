@@ -5,16 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes da Cachoeira</title>
+    <link href="bootstrap-5.0.2/css/bootstrap.css" rel="stylesheet">
     <script src="jquery-3.7.1.min.js"></script>
     <script src="app.js"></script>
 </head>
 
 <body>
-    <div id="tela">
+
+
+    <div id="Destaque" class="container mt-4">
 
     </div>
 
+
+    </div>
+    <script src="bootstrap-5.0.2/js/bootstrap.min.js"></script>
+    <script src="bootstrap-5.0.2/js/bootstrap.bundle.min.js"></script>
     <script>
+        let Destaque = $('#Destaque');
         $(document).ready(function () {
             carregarDados().then(() => {
                 let params = new URLSearchParams(location.search)
@@ -25,14 +33,29 @@
                     return elem.id == id
                 });
                 if (CachoeiraSelecionada) {
-                    let tela = $('#tela');
-                    tela.html(`<p>
-                        id: ${CachoeiraSelecionada.id} <br>
-                        capa: ${CachoeiraSelecionada.capa} <br>
-                        titulo: ${CachoeiraSelecionada.titulo} <br>
-                        localizacao: ${CachoeiraSelecionada.localizacao} <br>
-                        descritivo: ${CachoeiraSelecionada.descritivo} <br>
-                    </p>`);
+
+                    Destaque.html(`
+    <div class="container border rounded p-3">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="${CachoeiraSelecionada.capa}" class="img-fluid rounded" alt="Imagem de destaque">
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+                <div>
+                    <h5>${CachoeiraSelecionada.titulo}</h5>
+                    <ul class="list-unstyled">
+                        <li style="display:none">id: ${CachoeiraSelecionada.id}</li>
+                        <li><strong>${CachoeiraSelecionada.localizacao}</strong></li>
+                    </ul>
+                    <p>${CachoeiraSelecionada.descritivo}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+`);
+
+                } else {
+                    Destaque.html(`Cidade Não encontrada`);
                 }
             })
         });
