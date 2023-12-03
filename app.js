@@ -1,14 +1,23 @@
-const url ='https://jsonserver-cachoeiras--dantonlucassaga.repl.co/Cachoeiras'
-let Cachoeiras = []
+const url = 'https://jsonserver-cachoeiras--dantonlucassaga.repl.co/Cachoeiras';
+let Cachoeiras = [];
+let Destaques = [];
 fetch(url)
-    .then(function(response) {return response.json()})
-    .then(function(dados){
-        Cachoeiras = dados
-        console.log ('Dados Carregados!')
-    })
+    .then(function (response) { return response.json() })
+    .then(function (dados) {
+        Cachoeiras = dados;
+        console.log('Dados de Cachoeiras Carregados!');
 
+        const urlDestaques = 'https://jsonserver-cachoeiras--dantonlucassaga.repl.co/Destaques';
 
-$(document).ready(function(){
+        fetch(urlDestaques)
+            .then(function (response) { return response.json() })
+            .then(function (dados) {
+                Destaques = dados;
+                console.log('Dados de Destaques Carregados!');
+            });
+    });
+
+$(document).ready(function () {
     let ulgaleriaDeFotos = $('#galeriaDeFotos');
     let strTextoHTML = "";
     for (let i = 0; i < Cachoeiras.length; i++) {
@@ -27,7 +36,31 @@ $(document).ready(function(){
             </div>
         </div>
     </div>`;
-  
+
     }
     ulgaleriaDeFotos.html(strTextoHTML);
+});
+
+
+$(document).ready(function () {
+    let ulFotosDestaque = $('#CarrousselDeFotos');
+    let strImagemDestaque = "";
+    for (let i = 0; i < Destaques.length; i++) {
+        let Destaque = Destaques[i];
+
+        strImagemDestaque += ` <div>   
+        <a href="">
+        <img src="${Destaque.image}" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+            <h5>${Destaque.titulo}</h5>
+            <p>${Destaque.localizacao} </p>
+
+            </p>
+        </div>
+    </a>
+    </div> `
+            ;
+
+    }
+    ulFotosDestaque.html(strImagemDestaque);
 });
