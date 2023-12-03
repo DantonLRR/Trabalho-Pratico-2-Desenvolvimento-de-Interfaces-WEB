@@ -179,19 +179,29 @@ $(document).ready(function () {
     for (let i = 0; i < Cachoeiras.length; i++) {
         let Cachoeira = Cachoeiras[i];
 
-        strTextoHTML += ` <div class="col-md-4 mb-4">
-        <div class="card h-100">
-            <a href="detalhe_album.html?id=${Cachoeira.id}">
-                <img src="${Cachoeira.capa}" class="card-img-top" alt="Imagem 1"
-                    style="max-height: 200px;">
-                    </a>
-            <div class="card-body">
-                <h2 class="card-title"><li>${Cachoeira.titulo}</li></h2>
-                <h5<li>${Cachoeira.localizacao}</li></h2>
-                <p class="card-text">${Cachoeira.descritivo}</p>
-            </div>
-        </div> 
-    </div>`;
+        strTextoHTML += `<div class="col-md-4 mb-4">
+    <div class="card h-100">
+        <a href="detalhe_album.html?id=${Cachoeira.id}" class="stretched-link">
+            <img src="${Cachoeira.capa}" class="card-img-top" alt="Imagem 1" style="object-fit: cover; height: 200px;">
+        </a>
+        <div class="card-body">
+            <h5 class="card-title">${Cachoeira.titulo}</h5>
+            <li>${Cachoeira.localizacao}</li>
+            <p class="card-text">${Cachoeira.descritivo}</p>
+        </div>
+    </div>
+</div>
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    }
+    .card:hover {
+        transform: scale(1.05); 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1;
+    }
+</style>
+`;
 
     }
     ulgaleriaDeFotos.html(strTextoHTML);
