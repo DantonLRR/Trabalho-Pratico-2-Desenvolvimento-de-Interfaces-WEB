@@ -29,7 +29,6 @@
         </div>
     </div>
 
-
     <div>
         <br>
         <br>
@@ -37,10 +36,9 @@
         <hr>
         <br>
         <div class="container">
-            <di class="row justify-content-center">
+            <div class="row justify-content-center">
                 <div class="col">
                     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-
                         <div class="carousel-indicators">
                             <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0"
                                 class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -49,9 +47,8 @@
                             <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
                                 aria-label="Slide 3"></button>
                         </div>
-                        <div class="carousel-inner">
-                            <div id="CarrousselDeFotos" class="carousel-item active">
-                               
+                        <div id ="CarrousselDeFotos" class="carousel-inner">
+                           
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
                             data-bs-slide="prev">
@@ -67,8 +64,8 @@
                 </div>
             </div>
         </div>
-
     </div>
+    
     <div>
         <h2>Mapas de endereço das cachoeiras</h2>
         <hr>
@@ -148,27 +145,32 @@
 //carrossel
 $(document).ready(function () {
     carregarDados().then(() => {
-    let ulFotosDestaque = $('#CarrousselDeFotos');
-    let strImagemDestaque = "";
-    for (let i = 0; i < Destaques.length; i++) {
-        let Destaque = Destaques[i];
+        let ulFotosDestaque = $('#CarrousselDeFotos');
+        let strImagemDestaque = "";
+        
+        for (let i = 0; i < Destaques.length; i++) {
+            let Destaque = Destaques[i];
 
-        strImagemDestaque += ` <div>   
-        <a href="">
-        <img src="${Destaque.image}" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
-            <h5>${Destaque.titulo}</h5>
-            <p>${Destaque.localizacao} </p>
+            strImagemDestaque += `
+           
+                <div class="carousel-item ${i === 0 ? 'active' : ''}">
+                    <a href="detalhe_album.html?id=${Destaque.id}" class="stretched-link">
+                    <img src="${Destaque.image}" class="d-block w-100" alt="Imagem ${i + 1}">
+                </a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>${Destaque.titulo}</h5>
+                        <p>${Destaque.localizacao}</p>
+                    </div>
+               
+                </div>
+          `
+                ;
+        }
+        ulFotosDestaque.html(strImagemDestaque);
 
-            </p>
-        </div>
-    </a>
-    </div> `
-            ;
-
-    }
-    ulFotosDestaque.html(strImagemDestaque);
-});
+        // Iniciar o carrossel após adicionar o conteúdo dinâmico
+        $('#carouselExampleCaptions').carousel();
+    });
 
 });
 
@@ -213,6 +215,42 @@ $(document).ready(function () {
 </script>
 <script>
 
+function loadMap() {
+
+const urlBase = 'https://jsonserver-cachoeiras.dantonlucassaga.repl.co';
+const urlMapa = `${urlBase}/Cachoeiras`;
+
+fetch(urlMapa)
+    .then(response => response.json())
+    .then(json => {
+        console.log('JSON do mapa:', json);
+        json.forEach((item) => {
+
+            var popup = new mapboxgl.Popup({ offset: 25 })
+                .setHTML(`<h5>
+                <a href="detalhe_album.html?id=${item.id}" target="_blank">
+                <img src="${item.capa}" class="card-img-top" alt="Imagem 1" style="object-fit: cover; height: 100px;">
+                ${item.titulo}
+                
+                </h5>
+                <br>
+                          ${item.descritivo} <br>`);
+            const marker = new mapboxgl.Marker({ color: "blue"})
+                .setLngLat(item.location_coordinates)
+                .setPopup(popup)
+                .addTo(map);
+
+        })
+
+    })
+    .catch(error => {
+        console.error('Erro ao obter JSON do mapa:', error);
+    });
+}
+
+window.addEventListener("load", (ev) => {
+loadMap(ev)
+})
     // Defini o ponto central do mapa
     const centralLatLong = [-43.9397233, -19.9332786]
 
@@ -229,11 +267,7 @@ $(document).ready(function () {
       zoom: 5
     });
 
-    // ----------------------------------------------
-    // Adiciona um marcador para cada unidade
-    unidadesPUC.forEach((uni) => {
-     
-    }) 
+
   </script>
 
 

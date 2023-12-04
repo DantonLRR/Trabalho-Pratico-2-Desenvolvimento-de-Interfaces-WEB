@@ -11,13 +11,31 @@
 </head>
 
 <body>
-
+    <div class="container-fluid">
+        <div class="row" style="background-color: rgb(191, 245, 245);">
+            <div class="col-sm-1">
+                <img src="img/logo.png" class="img-fluid img-thumbnail" alt="...">
+            </div>
+            <div class="col-sm-10 align-self-center text-end">
+                <a href=""> <button type="button" class="btn btn-outline-primary">Inicio</button></a>
+                <a href="detalhes.html"> <button type="button" class="btn btn-outline-primary">Detalhes</button></a>
+                <a href="detalhes.html"><button type="button" class="btn btn-outline-primary">Mais detalhes</button>
+                </a>
+            </div>
+        </div>
+    </div>
 
     <div id="Destaque" class="container mt-4">
 
     </div>
 
+    <div class="container">
+        <h1>Veja Também</h1>
 
+        <div id="galeriaDeFotos" class="row">
+
+        </div>
+    </div>
     </div>
     <script src="bootstrap-5.0.2/js/bootstrap.min.js"></script>
     <script src="bootstrap-5.0.2/js/bootstrap.bundle.min.js"></script>
@@ -59,7 +77,93 @@
                 }
             })
         });
+
+        $(document).ready(function () {
+    carregarDados().then(() => {
+    let ulgaleriaDeFotos = $('#galeriaDeFotos');
+    let strTextoHTML = "";
+    for (let i = 0; i < Cachoeiras.length; i++) {
+        let Cachoeira = Cachoeiras[i];
+
+        strTextoHTML += `<div class="col-md-4 mb-4">
+    <div class="card h-100">
+        <a href="detalhe_album.html?id=${Cachoeira.id}" class="stretched-link">
+            <img src="${Cachoeira.capa}" class="card-img-top" alt="Imagem 1" style="object-fit: cover; height: 200px;">
+        </a>
+        <div class="card-body">
+            <h5 class="card-title">${Cachoeira.titulo}</h5>
+            <li>${Cachoeira.localizacao}</li>
+            <p class="card-text">${Cachoeira.descritivo}</p>
+        </div>
+    </div>
+</div>
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    }
+    .card:hover {
+        transform: scale(1.05); 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1;
+    }
+</style>
+`;
+
+    }
+    ulgaleriaDeFotos.html(strTextoHTML);
+});
+});
+
+
     </script>
 </body>
+<footer>
+    <div>
+        <br><br>
+        <h2>Créditos</h2>
+        <hr>
+        <br>
+        <div class="container-fluid">
+            <div class="row" style="background-color: rgb(191, 245, 245);">
+                <div class="col-sm-6">
+                    <h2>Sobre</h2>
+                    <div class="row">
 
+                        <div class="col-sm-11">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vulputate velit orci, sed
+                            lobortis odio viverra non. Curabitur sit amet ante egestas, semper odio ac, porta tortor.
+                            Quisque vestibulum lorem nec enim dapibus vulputate. Duis tincidunt ac tellus non lacinia.
+                            Nunc scelerisque augue eget dui vehicula, a pharetra nulla feugiat. Nulla sagittis felis
+                            erat.>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <h2>Autoria</h2>
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <i class="fas fa-user fa-2x"></i>
+                        </div>
+                        <div class="col-sm-11">
+                            <p><b>Aluno:</b> Danton Lucas Ribeiro Rodrigues</p>
+                            <p><b>Curso:</b> Sistemas de Informação</p>
+                            <p><b>Turma:</b> Nome da Turma</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 d-flex justify-content-center">
+                        <i class="fab fa-facebook fa-2x"></i>
+                        <i class="fab fa-twitter fa-2x"></i>
+                        <i class="fab fa-instagram fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</footer>
 </html>
+
+
+
