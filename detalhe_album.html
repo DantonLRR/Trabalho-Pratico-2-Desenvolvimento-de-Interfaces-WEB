@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes da Cachoeira</title>
+    <link rel="stylesheet" href="css_principal.css">
     <link href="bootstrap-5.0.2/css/bootstrap.css" rel="stylesheet">
+    <link href="bootstrap-5.0.2/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="jquery-3.7.1.min.js"></script>
     <script src="app.js"></script>
 </head>
@@ -25,6 +28,58 @@
         </div>
     </div>
 
+
+    <div class="container mt-5">
+        <div class="modal fade" id="meuModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Cabeçalho do Modal -->
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modalLabel">Título do Modal</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <!-- Corpo do Modal -->
+                    <div class="modal-body">
+
+
+
+                        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+                            <div id="CarrousselDeFotos" class="carousel-inner">
+                                <!-- Imagens do carrossel -->
+
+
+                                <!-- Adicione mais imagens conforme necessário -->
+                            </div>
+                            <!-- Controles do carrossel -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Anterior</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Próximo</span>
+                            </button>
+                        </div>
+
+
+                    </div>
+
+                    <!-- Rodapé do Modal -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+
     <div id="Destaque" class="container mt-4">
 
     </div>
@@ -39,7 +94,47 @@
     </div>
     <script src="bootstrap-5.0.2/js/bootstrap.min.js"></script>
     <script src="bootstrap-5.0.2/js/bootstrap.bundle.min.js"></script>
+
+
+
     <script>
+    
+//carrossel
+$(document).ready(function () {
+    carregarDados().then(() => {
+        let ulFotosDestaque = $('#CarrousselDeFotos');
+        let strImagemDestaque = "";
+        
+        for (let i = 0; i < Destaques.length; i++) {
+            let Destaque = Destaques[i];
+
+            strImagemDestaque += `
+           
+                <div class="carousel-item ${i === 0 ? 'active' : ''}">
+                    <a href="detalhe_album.html?id=${Destaque.id}" class="stretched-link">
+                    <img src="${Destaque.image}" class="d-block w-100" alt="Imagem ${i + 1}">
+                </a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>${Destaque.titulo}</h5>
+                        <p>${Destaque.localizacao}</p>
+                    </div>
+               
+                </div>
+          `
+                ;
+        }
+        ulFotosDestaque.html(strImagemDestaque);
+
+        // Iniciar o carrossel após adicionar o conteúdo dinâmico
+        $('#carouselExampleCaptions').carousel();
+    });
+
+});
+
+
+
+
+
         let Destaque = $('#Destaque');
         $(document).ready(function () {
             carregarDados().then(() => {
@@ -56,7 +151,7 @@
     <div class="container border rounded p-3">
         <div class="row">
             <div class="col-md-6">
-                <img src="${CachoeiraSelecionada.capa}" class="img-fluid rounded" alt="Imagem de destaque">
+                <img src="${CachoeiraSelecionada.capa}" class="abrirMODALdeFotos img-fluid rounded" alt="Imagem de destaque">
             </div>
             <div class="col-md-6 d-flex align-items-center">
                 <div>
@@ -71,6 +166,10 @@
         </div>
     </div>
 `);
+                    // Associar evento de clique à imagem gerada para abrir o modal
+                    $('.abrirMODALdeFotos').click(function () {
+                        $('#meuModal').modal('show');
+                    });
 
                 } else {
                     Destaque.html(`Cidade Não encontrada`);
@@ -78,14 +177,17 @@
             })
         });
 
-        $(document).ready(function () {
-    carregarDados().then(() => {
-    let ulgaleriaDeFotos = $('#galeriaDeFotos');
-    let strTextoHTML = "";
-    for (let i = 0; i < Cachoeiras.length; i++) {
-        let Cachoeira = Cachoeiras[i];
 
-        strTextoHTML += `<div class="col-md-4 mb-4">
+
+
+        $(document).ready(function () {
+            carregarDados().then(() => {
+                let ulgaleriaDeFotos = $('#galeriaDeFotos');
+                let strTextoHTML = "";
+                for (let i = 0; i < Cachoeiras.length; i++) {
+                    let Cachoeira = Cachoeiras[i];
+
+                    strTextoHTML += `<div class="col-md-4 mb-4">
     <div class="card h-100">
         <a href="detalhe_album.html?id=${Cachoeira.id}" class="stretched-link">
             <img src="${Cachoeira.capa}" class="card-img-top" alt="Imagem 1" style="object-fit: cover; height: 200px;">
@@ -109,10 +211,10 @@
 </style>
 `;
 
-    }
-    ulgaleriaDeFotos.html(strTextoHTML);
-});
-});
+                }
+                ulgaleriaDeFotos.html(strTextoHTML);
+            });
+        });
 
 
     </script>
@@ -130,11 +232,8 @@
                     <div class="row">
 
                         <div class="col-sm-11">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vulputate velit orci, sed
-                            lobortis odio viverra non. Curabitur sit amet ante egestas, semper odio ac, porta tortor.
-                            Quisque vestibulum lorem nec enim dapibus vulputate. Duis tincidunt ac tellus non lacinia.
-                            Nunc scelerisque augue eget dui vehicula, a pharetra nulla feugiat. Nulla sagittis felis
-                            erat.>
+                            Elaborado durante o primeiro semestre do curso de Sistemas de Informação na PUC Minas
+                            Barreiro
                         </div>
                     </div>
                 </div>
@@ -163,7 +262,5 @@
 
 
 </footer>
+
 </html>
-
-
-
